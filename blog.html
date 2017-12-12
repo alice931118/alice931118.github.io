@@ -1,0 +1,28 @@
+---
+layout: default
+title: my Blog
+description: 博 —— 不积跬步无以至千里
+---
+{% include header.html %}
+<div class="blog_header">
+	<div class="blog_header_content">
+		<h2>{{ page.title }}</h2>
+		<h4>{{ page.description }}</h4>
+	</div>
+</div>
+<div class="note">
+	<div class="post">
+		<ul class="blog_list">
+			{% for post in site.posts %}
+			<li><a href="{{ post.url }}">
+				<div class="blog_title">
+					<span class="time">{{ post.date | date_to_string }}</span> | <span class="title">{{ post.title }}</span>
+				</div>
+				<div class="excerpt">
+					{{ post.excerpt }}
+				</div>
+			</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

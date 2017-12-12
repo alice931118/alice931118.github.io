@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+		<title>My CV</title>
+		<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/public/css/common.css">
+		<script type="text/javascript" src="/public/js/jquery.js"></script>
+		<script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="loader">
+			<div class="css-diamond"></div>
+		</div>
+		<div class="content" style="display:none;">
+			<link rel="stylesheet" href="/public/css/jquery.fullPage.css">
+<link rel="stylesheet" href="/public/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/css/about.css">
+<script src="/public/js/jquery.fullPage.min.js"></script>
+
+<div id="fullpage">
+	<div class="section section1">
+		<div class="about_content">
+			<div class="myHead"></div>
+			<div class="info">
+				<p class="myName">Gao Xueyin <span class="chineseName">高学吟</span></p>
+				<p class="myEmail"><i class="icon-envelope"></i> <a href="mailto:358751511@qq.com">358751511@qq.com</a></p>
+				<p class="myGithub"><i class="icon-github"></i> <a href="github.com/358751511">github.com/358751511</a></p>
+			</div>
+		</div>
+	</div>
+	<div class="section section2">
+		<div class="about_content">
+			<ul>
+				<li class="school clearfix">
+					<p class="left">毕业院校</p>
+					<p class="right">南京邮电大学</p>
+				</li>
+				<li class="school clearfix">
+					<p class="left">本科专业</p>
+					<p class="right">计算机科学与技术</p>
+				</li>
+				<li class="work clearfix">
+					<p class="left">就职经历</p>
+					<div class="right">
+						<p>2016.07 - 至&nbsp;&nbsp;&nbsp;&nbsp;今 —— 同程网络科技股份有限公司</p>
+						<p>2015.12 - 2016.3 —— 新科兰德科技有限公司(实习)</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="section section3 firstLoad">
+		<div class="about_content">
+			<p class="title">my skills</p>
+			<ul class="skills clearfix">
+				<li>
+					<canvas id="myCanvas_1" width="150" height="150"></canvas>
+					<p>Html</p>
+				</li>
+				<li>
+					<canvas id="myCanvas_2" width="150" height="150"></canvas>
+					<p>Css</p>
+				</li>
+				<li>
+					<canvas id="myCanvas_3" width="150" height="150"></canvas>
+					<p>Javascript</p>
+				</li>
+				<li>
+					<canvas id="myCanvas_4" width="150" height="150"></canvas>
+					<p>JQuery</p>
+				</li>
+				<li>
+					<canvas id="myCanvas_5" width="150" height="150"></canvas>
+					<p>Node.js</p>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function(){
+		$('#fullpage').fullpage({
+			sectionsColor: ['#333', '#eee', '#333'],
+			navigation: true,
+			afterLoad: function(anchorLink, index){
+				if(index == 3 && $(".section3").hasClass("firstLoad") ){
+					drawJinDuTiao(90,$('#myCanvas_1')[0].getContext("2d"));
+					drawJinDuTiao(80,$('#myCanvas_2')[0].getContext("2d"));
+					drawJinDuTiao(60,$('#myCanvas_3')[0].getContext("2d"));
+					drawJinDuTiao(70,$('#myCanvas_4')[0].getContext("2d"));
+					drawJinDuTiao(40,$('#myCanvas_5')[0].getContext("2d"));
+					$(".section3").removeClass("firstLoad");
+				}
+			}
+		});
+
+
+		function drawJinDuTiao(degree,context){
+			var canvas = context.canvas;
+			var nowDegree = 0;
+
+			CanvasRenderingContext2D.prototype.jindutiao = function(degree,context){
+				drawBackRoll();
+
+				var timer = setInterval(function(){
+					update(degree);
+				},20);
+
+				function drawBackRoll(){
+					context.beginPath();
+					context.strokeStyle = "agba(0,255,255,0)";
+					context.lineWidth = 10;
+					context.arc(canvas.width/2,canvas.height/2,canvas.width/2-20,0,2*Math.PI,anticlockwise=false);
+					context.stroke();
+				}
+				function update(degree){
+					if(nowDegree <= degree){
+						context.clearRect(0,0,canvas.width,canvas.height);
+
+						drawBackRoll();
+
+						context.beginPath();
+						context.save();
+						context.translate(canvas.width/2,canvas.height/2);
+						context.strokeStyle = "#fd3"; 
+						context.rotate(-90*Math.PI/180); 
+						context.translate(-canvas.width/2,-canvas.height/2);
+
+						context.arc(canvas.width/2,canvas.height/2,canvas.width/2-20,0,nowDegree/100*2*Math.PI,anticlockwise=false);
+						context.stroke();
+						context.restore();
+						nowDegree += 1;
+
+					}else{
+						nowDegree = degree;
+						clearInterval(timer);
+					}
+					
+				}
+			}
+			context.jindutiao(degree,context);
+
+		}
+		
+		
+		
+
+
+	});
+</script>
+		</div>
+
+		<script>
+			if($(".banner img").length > 0){
+				$(".banner img").load(function(){
+					var t1 = setTimeout(function() {
+						$(".loader").fadeOut();
+						$(".content").fadeIn();
+					},500)
+				});
+			}else{
+				var t2 = setTimeout(function() {
+					$(".loader").fadeOut();
+					$(".content").fadeIn();
+				},500)
+			}
+		</script>
+	</body>
+</html>

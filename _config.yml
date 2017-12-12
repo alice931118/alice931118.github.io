@@ -1,0 +1,6 @@
+# theme: jekyll-theme-cayman
+baseurl: /
+author:
+name: 'gxy'
+url: https://github.com/358751511
+excerpt_separator: '<!-- more -->'

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+		<title>我的第一个插件：canvas圆形进度条</title>
+		<link rel="stylesheet" type="text/css" href="../../../public/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../public/css/common.css">
+		<link rel="stylesheet" type="text/css" href="../../../public/css/blog.css">
+		<script type="text/javascript" src="../../../public/js/jquery.js"></script>
+		<script type="text/javascript" src="../../../public/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="content">
+
+			<style type="text/css">
+	.fixNav{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		background: rgba(255, 255, 255, 0.8);
+		box-shadow: 0 5px 0 rgba(0, 0, 0, 0.04), 0 10px 10px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.05);
+		position: fixed;
+		top: 0;
+		z-index: 1;
+		-webkit-transition: top 0.6s;
+		-moz-transition: top 0.6s;
+		-ms-transition: top 0.6s;
+		-o-transition: top 0.6s;
+		transition: top 0.6s;
+	}
+	.zhanwei{
+		height: 50px;
+	}
+	.fixNav .content{
+		width: 920px;
+		margin:0 auto;
+		padding:0 10px;
+		font-size: 20px;
+	}
+	.leftBlock{
+		float: left;
+	}
+	.rightBlock{
+		float: right;
+		font-size: 14px;
+	}
+	.rightBlock li{
+		float: left;
+		margin-right: 20px;
+	}
+	.rightBlock li.last{
+		margin-right: 0px;
+	}
+	.rightBlock li a{
+		color: #464646;
+	}
+	@media screen and (max-width: 920px) {
+		.fixNav .content{
+			width: 100%;
+			padding:0 20px;
+			font-size: 20px;
+			box-sizing:border-box;
+		}
+	}
+</style>
+
+<div class="fixNav">
+	<div class="content clearfix">
+		<p class="leftBlock">博</p>
+
+		<ul class="rightBlock clearfix">
+			<li><a href="/">首页</a></li>
+			<li class="last"><a href="/blog">博客目录</a></li>
+		</ul>
+	</div>
+</div>
+<div class="zhanwei"></div>
+			<div class="note">
+				<div class="post">
+					<div class="info">
+						<h2>我的第一个插件：canvas圆形进度条</h2>
+						<span>创建于
+							<time>&nbsp2017-12-06</time>
+						</span>
+					</div>
+					
+					<p>基于jquery的canvas绘图插件。
+<!-- more --></p>
+<h3 id="示例">示例</h3>
+
+<canvas width="150" height="150" id="myCanvas_1"></canvas>
+<canvas width="200" height="200" id="myCanvas_2"></canvas>
+
+<p>使用如下：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;canvas width="200" height="200" id="myCanvas_1"&gt;&lt;/canvas&gt;
+&lt;canvas width="300" height="300" id="myCanvas_2"&gt;&lt;/canvas&gt;
+$('#myCanvas_1').drawJDT();
+$('#myCanvas_2').drawJDT({
+	degree: 60,
+	lineWidth: 20,
+	lineColor: "red",
+	anticlockwise: true,
+	rotateDegree: -90
+});
+</code></pre></div></div>
+
+<h3 id="api">API</h3>
+<p>（以下均采用默认值）</p>
+
+<p>degree: 10,						//进度条百分比<br />
+refreshFrequency: 20,   		//刷新频率（ms）<br />
+perDegree: 1,   				//每次刷新增加的百分比<br />
+lineWidth: 10,  				//进度条宽度<br />
+bgColor: “agba(0,255,255,0)”,	//进度条背景色<br />
+lineColor: “#fd3”,				//进度条颜色<br />
+centerX: canvas.width/2,		//圆心坐标x<br />
+centerY: canvas.height/2,		//圆心坐标y<br />
+radius: canvas.width/2-20,		//圆半径<br />
+anticlockwise: false,			//顺时针(false)、逆时针（true）<br />
+rotateDegree: 90				//进度条旋转角度</p>
+
+<script type="text/javascript">
+
+		(function($){
+			$.fn.drawJDT = function(options){
+				var canvas = $(this)[0],
+					context = $(this)[0].getContext("2d");
+
+				var defaults = {
+					degree: 10,
+					refreshFrequency: 20,
+					perDegree: 1,
+					lineWidth: 10,
+					bgColor: "agba(0,255,255,0)",
+					lineColor: "#fd3",
+					centerX: canvas.width/2,
+					centerY: canvas.height/2,
+					radius: canvas.width/2-20,
+					anticlockwise: false,
+					rotateDegree: 90
+				}
+				var settings = $.extend(defaults,options);
+				
+				var nowDegree = 0;
+				if(settings.anticlockwise){
+					nowDegree = 100;
+					settings.perDegree = -1*settings.perDegree;
+					settings.degree = 100 - settings.degree;
+				}
+
+				CanvasRenderingContext2D.prototype.jindutiao = function(degree,context){
+					drawBackRoll();
+
+					var timer = setInterval(function(){
+						update(degree);
+					},settings.refreshFrequency);
+
+
+					function drawBackRoll(){
+						context.beginPath();
+						context.strokeStyle = settings.bgColor;
+						context.lineWidth = settings.lineWidth;
+						context.arc(settings.centerX,settings.centerY,settings.radius,0,2*Math.PI,anticlockwise=settings.anticlockwise);
+						context.stroke();
+					}
+					function update(degree){
+						
+						function updateContent(){
+							context.clearRect(0,0,canvas.width,canvas.height);
+
+							drawBackRoll();
+
+							context.beginPath();
+							context.save();
+
+							context.translate(settings.centerX,settings.centerY);
+							context.lineWidth = settings.lineWidth + 0.5;
+							context.strokeStyle = settings.lineColor; 
+							context.rotate(-settings.rotateDegree*Math.PI/180); 
+							context.translate(-settings.centerX,-settings.centerY);
+
+							context.arc(settings.centerX,settings.centerY,settings.radius,0,nowDegree/100*2*Math.PI,anticlockwise=settings.anticlockwise);
+							context.stroke();
+							context.restore();
+							nowDegree += settings.perDegree;
+						}
+
+						if(!settings.anticlockwise){
+							if(nowDegree <= degree){
+								updateContent();
+							}else{
+								nowDegree = degree;
+								clearInterval(timer);
+							}
+						}else{
+							if(nowDegree >= degree){
+								updateContent();
+							}else{
+								nowDegree = degree;
+								clearInterval(timer);
+							}
+						}
+					}
+				}
+				context.jindutiao(settings.degree,context);
+			}
+		})(jQuery);
+
+		$('#myCanvas_1').drawJDT();
+		$('#myCanvas_2').drawJDT({
+			degree: 60,
+			lineWidth: 20,
+			lineColor: "red",
+			anticlockwise: true,
+			rotateDegree: -90
+		});
+
+	</script>
+
+
+
+					<div id="divider">
+						
+						<a class="" id="lastest"><i class="fa fa-circle"></i></a>
+						
+						
+						<a class="" href="/2017/11/23/canvas.html" title="下一篇"><i class="fa fa-chevron-right"></i>下一篇 ></a>
+						
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

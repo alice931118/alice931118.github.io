@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+		<title>my Blog</title>
+		<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/public/css/common.css">
+		<script type="text/javascript" src="/public/js/jquery.js"></script>
+		<script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="loader">
+			<div class="css-diamond"></div>
+		</div>
+		<div class="content" style="display:none;">
+			<style type="text/css">
+	.fixNav{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		background: rgba(255, 255, 255, 0.8);
+		box-shadow: 0 5px 0 rgba(0, 0, 0, 0.04), 0 10px 10px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.05);
+		position: fixed;
+		top: 0;
+		z-index: 1;
+		-webkit-transition: top 0.6s;
+		-moz-transition: top 0.6s;
+		-ms-transition: top 0.6s;
+		-o-transition: top 0.6s;
+		transition: top 0.6s;
+	}
+	.zhanwei{
+		height: 50px;
+	}
+	.fixNav .content{
+		width: 920px;
+		margin:0 auto;
+		padding:0 10px;
+		font-size: 20px;
+	}
+	.leftBlock{
+		float: left;
+	}
+	.rightBlock{
+		float: right;
+		font-size: 14px;
+	}
+	.rightBlock li{
+		float: left;
+		margin-right: 20px;
+	}
+	.rightBlock li.last{
+		margin-right: 0px;
+	}
+	.rightBlock li a{
+		color: #464646;
+	}
+	@media screen and (max-width: 920px) {
+		.fixNav .content{
+			width: 100%;
+			padding:0 20px;
+			font-size: 20px;
+			box-sizing:border-box;
+		}
+	}
+</style>
+
+<div class="fixNav">
+	<div class="content clearfix">
+		<p class="leftBlock">博</p>
+
+		<ul class="rightBlock clearfix">
+			<li><a href="/">首页</a></li>
+			<li class="last"><a href="/blog">博客目录</a></li>
+		</ul>
+	</div>
+</div>
+<div class="zhanwei"></div>
+<div class="blog_header">
+	<div class="blog_header_content">
+		<h2>my Blog</h2>
+		<h4>博 —— 不积跬步无以至千里</h4>
+	</div>
+</div>
+<div class="note">
+	<div class="post">
+		<ul class="blog_list">
+			
+			<li><a href="/2017/12/06/canvas-draw-jindutiao.html">
+				<div class="blog_title">
+					<span class="time">06 Dec 2017</span> | <span class="title">我的第一个插件：canvas圆形进度条</span>
+				</div>
+				<div class="excerpt">
+					<p>基于jquery的canvas绘图插件。</p>
+
+
+				</div>
+			</a></li>
+			
+			<li><a href="/2017/11/23/canvas.html">
+				<div class="blog_title">
+					<span class="time">23 Nov 2017</span> | <span class="title">canvas绘图基础</span>
+				</div>
+				<div class="excerpt">
+					<p>开始前的准备</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var canvas = document.getElementById('myCanvas');
+var context = canvas.getContext("2d");
+</code></pre></div></div>
+
+
+				</div>
+			</a></li>
+			
+		</ul>
+	</div>
+</div>
+
+		</div>
+
+		<script>
+			if($(".banner img").length > 0){
+				$(".banner img").load(function(){
+					var t1 = setTimeout(function() {
+						$(".loader").fadeOut();
+						$(".content").fadeIn();
+					},500)
+				});
+			}else{
+				var t2 = setTimeout(function() {
+					$(".loader").fadeOut();
+					$(".content").fadeIn();
+				},500)
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui" />
+		<title>canvas绘图基础</title>
+		<link rel="stylesheet" type="text/css" href="../../../public/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../public/css/common.css">
+		<link rel="stylesheet" type="text/css" href="../../../public/css/blog.css">
+		<script type="text/javascript" src="../../../public/js/jquery.js"></script>
+		<script type="text/javascript" src="../../../public/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="content">
+
+			<style type="text/css">
+	.fixNav{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		background: rgba(255, 255, 255, 0.8);
+		box-shadow: 0 5px 0 rgba(0, 0, 0, 0.04), 0 10px 10px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.05);
+		position: fixed;
+		top: 0;
+		z-index: 1;
+		-webkit-transition: top 0.6s;
+		-moz-transition: top 0.6s;
+		-ms-transition: top 0.6s;
+		-o-transition: top 0.6s;
+		transition: top 0.6s;
+	}
+	.zhanwei{
+		height: 50px;
+	}
+	.fixNav .content{
+		width: 920px;
+		margin:0 auto;
+		padding:0 10px;
+		font-size: 20px;
+	}
+	.leftBlock{
+		float: left;
+	}
+	.rightBlock{
+		float: right;
+		font-size: 14px;
+	}
+	.rightBlock li{
+		float: left;
+		margin-right: 20px;
+	}
+	.rightBlock li.last{
+		margin-right: 0px;
+	}
+	.rightBlock li a{
+		color: #464646;
+	}
+	@media screen and (max-width: 920px) {
+		.fixNav .content{
+			width: 100%;
+			padding:0 20px;
+			font-size: 20px;
+			box-sizing:border-box;
+		}
+	}
+</style>
+
+<div class="fixNav">
+	<div class="content clearfix">
+		<p class="leftBlock">博</p>
+
+		<ul class="rightBlock clearfix">
+			<li><a href="/">首页</a></li>
+			<li class="last"><a href="/blog">博客目录</a></li>
+		</ul>
+	</div>
+</div>
+<div class="zhanwei"></div>
+			<div class="note">
+				<div class="post">
+					<div class="info">
+						<h2>canvas绘图基础</h2>
+						<span>创建于
+							<time>&nbsp2017-11-23</time>
+						</span>
+					</div>
+					
+					<p>开始前的准备</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var canvas = document.getElementById('myCanvas');
+var context = canvas.getContext("2d");
+</code></pre></div></div>
+<!-- more -->
+<h3 id="api">API</h3>
+<p>路径：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>开始路径：context.beginPath();
+闭合路径（不必对称出现）：context.closePath();
+保存状态值：context.save();
+返回原始状态值：context.restore();
+</code></pre></div></div>
+
+<p>直线Line:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>线色：context.strokeStyle = "#fd3/agba(0,255,255,0.5)";   
+线宽：context.lineWidth = 3;
+线接口：context.lineJoin = "miter/bevel/round"; context.lineCap = "round";
+线接口=“miter”： context.miterLimit = 20;
+移动落脚点：context.moveTo(x,y);
+绘制路径：context.lineTo(x,y);
+画线：context.stroke();
+</code></pre></div></div>
+
+<p>弧线Arc:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>圆弧：context.arc(centerx,centery,radius,startAngle,endAngle,anticlockwise=false)  //指定圆心
+弧线：context.arcTo(x1,y1,x2,y2,radius)   //指定控制点和结束点
+贝塞尔二次曲线：contect.quadraticCurveTo(x1,y1,x2,y2)   //指定控制点和结束点
+贝塞尔三次曲线：contect.bezierCurveTo(x1,y1,x2,y2,x3,y3)   //指定两个控制点和结束点
+椭圆：contect.ellipse(x,y,radiusx,radiusy,rotation,startAngle,endAngle,anticlockwise=false)
+</code></pre></div></div>
+
+<p>填充Fill:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>填充色：context.fillStyle = "#000";
+填充长方形（直接画出来）：context.fillRect(0,0,canvas.width,canvas.height);
+填充：context.fill();
+线性渐变： var grd = context.createLinearGradient(xstart,ystart,xend,yend);
+grd.addColorStop(stop,color);
+径向渐变： var grd = context.createRadialGradient(x0,y0,r0,x1,y1,r1);
+图片: var backgroundImg = new Image();
+backgroundImg.src = "";
+backgroundImg.onload = function(){
+var pattern = context.createPattern(img, repeat-style); //no-repeat/repeat-x/repeat-y/repeat
+}
+</code></pre></div></div>
+
+<p>变换：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>位移：context.translate(x,y);
+缩放：context.scale(x,y)   //(x缩放，y缩放)
+变换矩阵：context.transform(1,0,0,1,x,y);   //(x缩放，y缩放)
+旋转（弧度）：context.rotate(rot/180*Math.PI); 
+</code></pre></div></div>
+
+<p>文字渲染：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>字体字号：context.font = "20px sans-serif"  
+font-style：normal/italic(斜体)/oblique(倾斜)
+font-variant：normal/small-caps (英文小写变小型大写)
+font-weight：normal400/lighter/bold700/bolder
+font-size: 20px/2em/150%/xx-small/x-small/medium/large/x-large/xx-large
+font-family: 多种字体备选、支持@font-face、web安全字体
+打印文字：context.fillText("xxxxx",x,y)
+文本水平对齐：context.textAlign = "left/center/right"
+文本垂直对齐：context.textBaseline = "alphabetic(字母)/ideographic(方块字)/hanging(印度文)/top/middle/bottom"
+文本度量：context.measureText(string).width
+</code></pre></div></div>
+
+<p>阴影与透明：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>阴影色：context.shadowColor = “grey”
+位移值：context.shadowOffsetX = 20
+context.shadowOffsetY
+模糊度：context.shadowBlur  //0不模糊，数字越大越模糊
+透明度：context.globalAlpha = 0.5
+遮盖效果：context.globalCompositeOperation = "source-over/source-atop/source-in/source-our/destination-over/lighter(颜色叠加)/copy/xor(重叠挖空)"
+</code></pre></div></div>
+
+<p>剪切：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>context.clip()
+</code></pre></div></div>
+
+<p>交互：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>坐标检测：context.isPointInPath(x，y)
+</code></pre></div></div>
+
+<p>拓展：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CanvasRenderingContext2D.prototype.functionName = function(){
+this.beginPath();
+……
+}
+context.functionName ();
+</code></pre></div></div>
+
+<p>路径方向：</p>
+<h4 id="非零环绕原则">非零环绕原则</h4>
+<p>首先，我们得给图形确定一条路径，只要“一笔画”并且“不走重复路线”就可以了。如图，标出的是其中的一种路径方向。我们先假定路径的正方向为1（其实为-1啥的也都可以，正负方向互为相反数，不是0就行），那么反方向就是其相反数-1。
+S3中引出的射线L3，与两条子路径相交，但是其中有一条的反方向，计数器+1-1，结果为0，在里面。没错，只要结果不为0，该射线所在的区域就在外面。
+<img src="http://www.gaoxueyin1993.xyz/public/images/canvas01.png" alt="" /></p>
+
+<p>常用的图形库<br />
+canvasplus || artisanJS || RGraph</p>
+
+<p>关于移动端遇到的锯齿问题，可以尝试如下解决方案：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let width = canvas.width,height=canvas.height;
+if (window.devicePixelRatio) {
+	canvas.style.width = width + "px";
+	canvas.style.height = height + "px";
+	canvas.height = height * window.devicePixelRatio;
+	canvas.width = width * window.devicePixelRatio;
+	ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+}
+</code></pre></div></div>
+<p>以及，PC上也会遇到的横竖线被1px给切割的情况：<br />
+如果横线，那就在y值上加个0.5
+如果竖线，那就在x值上加个0.5</p>
+
+<p>移动端百分比适应的情况下：
+一定要给canvas.width，canvas.height赋值，否则canvas绘制的内容会被压缩。</p>
+
+
+					<div id="divider">
+						
+						<a class="" href="/2017/12/06/canvas-draw-jindutiao.html" title="上一篇"><i class="fa fa-chevron-left"></i>< 上一篇</a>
+						
+						
+						<a class="" id="lastone"><i class="fa fa-circle"></i></a>
+						
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
